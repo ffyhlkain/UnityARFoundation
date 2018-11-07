@@ -1,0 +1,6 @@
+*.sln
+*.csproj
+ARFoundation/.vs/
+ARFoundation/Library/
+ARFoundation/obj/
+ARFoundation/Logs/
