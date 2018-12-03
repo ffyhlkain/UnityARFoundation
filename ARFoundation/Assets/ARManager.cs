@@ -74,7 +74,9 @@ public class ARManager : MonoBehaviour
             for (int i = 0; i < arRaycastHits.Count; i++)
             {
                 var raycastHit = arRaycastHits[i];
-                var augmentedObject = Instantiate(raycastHitGameObject, raycastHit.sessionRelativePose.position, raycastHit.sessionRelativePose.rotation);
+                var relativePose = raycastHit.sessionRelativePose;
+                var pose = raycastHit.pose;
+                var augmentedObject = Instantiate(raycastHitGameObject, pose.position, pose.rotation);
                 augmentedObjects.Add(augmentedObject);
             }
 
