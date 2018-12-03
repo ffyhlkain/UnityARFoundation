@@ -77,6 +77,8 @@ public class ARManager : MonoBehaviour
                 var augmentedObject = Instantiate(raycastHitGameObject, raycastHit.sessionRelativePose.position, raycastHit.sessionRelativePose.rotation);
                 augmentedObjects.Add(augmentedObject);
             }
+
+            arRaycastHits.Clear();
         }
 
         if (arSession != null && GUI.Button(new Rect(100, 290, 100, 60), "clear"))
