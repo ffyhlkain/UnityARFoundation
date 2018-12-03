@@ -27,19 +27,19 @@ public class ARManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (arSessionOrigin != null)
-        {
-            arRaycastHits.Clear();
+    //private void Update()
+    //{
+    //    if (arSessionOrigin != null)
+    //    {
+    //        arRaycastHits.Clear();
 
-            var raycastHits = arSessionOrigin.Raycast(Vector3.zero, arRaycastHits);
-            if (raycastHits)
-            {
+    //        var raycastHits = arSessionOrigin.Raycast(Vector3.zero, arRaycastHits);
+    //        if (raycastHits)
+    //        {
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 
     private void OnGUI()
     {
