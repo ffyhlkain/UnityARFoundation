@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
 
 public class ARManager : MonoBehaviour
@@ -37,7 +38,7 @@ public class ARManager : MonoBehaviour
 
             arRaycastHits.Clear();
 
-            var raycastHits = arSessionOrigin.Raycast(touch.position, arRaycastHits);
+            var raycastHits = arSessionOrigin.Raycast(touch.position, arRaycastHits, TrackableType.PlaneWithinPolygon);
             if (raycastHits)
             {
                 Debug.Log("Touch input hits: " + arRaycastHits.Count + " colliders.");
@@ -67,7 +68,7 @@ public class ARManager : MonoBehaviour
         {
             arSession.enabled = true;
         }
-        else if (arSession != null && arSession.enabled && GUI.Button(new Rect(10, 100, 200, 120), "disable"))
+        else if (arSession != null && arSession.enabled && GUI.Button(new Rect(10, 10, 200, 120), "disable"))
         {
             arSession.enabled = false;
         }
@@ -86,7 +87,7 @@ public class ARManager : MonoBehaviour
             arSession.lightEstimation = false;
         }
 
-        if (!enableTouchControl && arSession != null && GUI.Button(new Rect(100, 360, 200, 120), "cast ray"))
+        if (!enableTouchControl && arSession != null && GUI.Button(new Rect(100, 430, 200, 120), "cast ray"))
         {
             arSessionOrigin.Raycast(Vector3.zero, arRaycastHits);
             Debug.Log(arRaycastHits.Count + " objects hit.");
@@ -103,7 +104,7 @@ public class ARManager : MonoBehaviour
             arRaycastHits.Clear();
         }
 
-        if (arSession != null && GUI.Button(new Rect(100, 500, 200, 120), "clear"))
+        if (arSession != null && GUI.Button(new Rect(100, 570, 200, 120), "clear"))
         {
             for (int i = 0; i < augmentedObjects.Count; i++)
             {
@@ -112,7 +113,7 @@ public class ARManager : MonoBehaviour
             augmentedObjects.Clear();
         }
 
-        if (arSession != null && GUI.Button(new Rect(100, 500, 200, 120), "Touch: " + enableTouchControl))
+        if (arSession != null && GUI.Button(new Rect(100, 710, 200, 120), "Touch: " + enableTouchControl))
         {
             enableTouchControl = !enableTouchControl;
         }
