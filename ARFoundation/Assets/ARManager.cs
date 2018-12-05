@@ -8,6 +8,10 @@ public class ARManager : MonoBehaviour
     [SerializeField] private ARSession arSession;
     [SerializeField] private ARSessionOrigin arSessionOrigin;
     [SerializeField] private GameObject raycastHitGameObject;
+    [SerializeField] private Camera arCamera;
+    [SerializeField] private List<Transform> cameraPositions;
+
+    [SerializeField] private Animator astronautAnimator;
 
     private GameObject spawnedObject;
 
@@ -67,10 +71,14 @@ public class ARManager : MonoBehaviour
         if (arSession != null && !arSession.enabled && GUI.Button(new Rect(100, 10, 200, 120), "enable"))
         {
             arSession.enabled = true;
+            var position = cameraPositions[0];
+            arCamera.transform.SetPositionAndRotation(position.position, position.rotation);
         }
-        else if (arSession != null && arSession.enabled && GUI.Button(new Rect(10, 10, 200, 120), "disable"))
+        else if (arSession != null && arSession.enabled && GUI.Button(new Rect(100, 10, 200, 120), "disable"))
         {
             arSession.enabled = false;
+            var position = cameraPositions[0];
+            arCamera.transform.SetPositionAndRotation(position.position, position.rotation);
         }
 
         if (arSession != null && GUI.Button(new Rect(100, 150, 200, 120), "reset"))
@@ -78,16 +86,16 @@ public class ARManager : MonoBehaviour
             arSession.Reset();
         }
 
-        if (arSession != null && !arSession.lightEstimation && GUI.Button(new Rect(100, 290, 200, 120), "en. light est."))
+        if (arSession != null && arSession.enabled && !arSession.lightEstimation && GUI.Button(new Rect(100, 290, 200, 120), "en. light est."))
         {
             arSession.lightEstimation = true;
         }
-        else if (arSession != null && arSession.lightEstimation && GUI.Button(new Rect(100, 290, 200, 120), "dis. light est."))
+        else if (arSession != null && arSession.enabled && arSession.lightEstimation && GUI.Button(new Rect(100, 290, 200, 120), "dis. light est."))
         {
             arSession.lightEstimation = false;
         }
 
-        if (!enableTouchControl && arSession != null && GUI.Button(new Rect(100, 430, 200, 120), "cast ray"))
+        if (!enableTouchControl && arSession != null && arSession.enabled && GUI.Button(new Rect(100, 430, 200, 120), "cast ray"))
         {
             arSessionOrigin.Raycast(Vector3.zero, arRaycastHits);
             Debug.Log(arRaycastHits.Count + " objects hit.");
@@ -104,7 +112,7 @@ public class ARManager : MonoBehaviour
             arRaycastHits.Clear();
         }
 
-        if (arSession != null && GUI.Button(new Rect(100, 570, 200, 120), "clear"))
+        if (arSession != null && arSession.enabled &&  GUI.Button(new Rect(100, 570, 200, 120), "clear"))
         {
             for (int i = 0; i < augmentedObjects.Count; i++)
             {
@@ -113,9 +121,35 @@ public class ARManager : MonoBehaviour
             augmentedObjects.Clear();
         }
 
-        if (arSession != null && GUI.Button(new Rect(100, 710, 200, 120), "Touch: " + enableTouchControl))
+        if (arSession != null && arSession.enabled && GUI.Button(new Rect(100, 710, 200, 120), "Touch: " + enableTouchControl))
         {
             enableTouchControl = !enableTouchControl;
         }
+
+        if (astronautAnimator != null && GUI.Button(new Rect(100, 850, 200, 120), "Wave: " + waving))
+        {
+            waving = !waving;
+            astronautAnimator.SetBool("IsWaving", waving);
+        }
+
+        if (arCamera != null && GUI.Button(new Rect(320, 850, 200, 120), "1"))
+        {
+            var position = cameraPositions[0];
+            arCamera.transform.SetPositionAndRotation(position.position, position.rotation);
+        }
+
+        if (arCamera != null && GUI.Button(new Rect(540, 850, 200, 120), "2"))
+        {
+            var position = cameraPositions[1];
+            arCamera.transform.SetPositionAndRotation(position.position, position.rotation);
+        }
+
+        if (arCamera != null && GUI.Button(new Rect(760, 850, 200, 120), "3"))
+        {
+            var position = cameraPositions[2];
+            arCamera.transform.SetPositionAndRotation(position.position, position.rotation);
+        }
     }
+
+    private bool waving;
 }
