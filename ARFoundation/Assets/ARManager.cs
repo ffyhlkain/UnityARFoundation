@@ -54,6 +54,7 @@ public class ARManager : MonoBehaviour
                     if (spawnedObject == null)
                     {
                         spawnedObject = Instantiate(raycastHitGameObject, hitPose.position, hitPose.rotation);
+                        _anim = spawnedObject.GetComponent<Animator>();
                         Debug.Log("Touch input spawns object at: " + hitPose.position + "-" + hitPose.rotation);
                     }
                     else
@@ -130,6 +131,11 @@ public class ARManager : MonoBehaviour
         {
             waving = !waving;
             astronautAnimator.SetBool("IsWaving", waving);
+
+            if (_anim != null)
+            {
+                _anim.SetBool("IsWaving", waving);
+            }
         }
 
         if (arCamera != null && GUI.Button(new Rect(320, 850, 200, 120), "1"))
@@ -152,4 +158,5 @@ public class ARManager : MonoBehaviour
     }
 
     private bool waving;
+    private Animator _anim;
 }
